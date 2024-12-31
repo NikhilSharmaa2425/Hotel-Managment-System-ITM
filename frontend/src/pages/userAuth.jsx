@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import LoginForm from "../model/LoginForm";
-import SignupForm from "../model/SignupForm";
-import ImageContainer from "../model/ImageConatiner";
+import LoginForm from "../model/User/LoginForm";
+import SignupForm from "../model/User/SignupForm";
+import ImageContainer from "../model/User/ImageConatiner";
 import "../App.css";
 
 const UserAuth = () => {

@@ -1,6 +1,6 @@
 import React from "react";
 
-import overimg from "../assets/overimg.png"
+import overimg from "../../assets/overimg.png"
 
 function ImageContainer() {
   return (

@@ -1,9 +1,9 @@
 import React from "react";
 import axios from "axios";
-import { BACKEND_URL } from "../../config";
+import { BACKEND_URL } from "../../../config";
 import { Toaster, toast } from "sonner";
 import { useNavigate } from "react-router-dom";
-import "../App.css"
+import "../../styles/signupform.css"
 
 const UserSignup = ({ setIsSignupActive }) => {
   const navigate = useNavigate();

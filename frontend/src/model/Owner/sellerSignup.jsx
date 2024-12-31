@@ -1,10 +1,10 @@
 import React from 'react'
-import Input from '../Components/Input'
-import { BACKEND_URL } from '../../config'
+import Input from '../../Components/input'
+import { BACKEND_URL } from '../../../config'
 import { toast, Toaster } from 'sonner'
 import axios from "axios"
 import { useNavigate } from 'react-router-dom'
-import "../styles/SellerSignup.css"
+import "../../styles/SellerSignup.css"
 
 const SellerSignup = ({authType}) => {
     const navigate = useNavigate()

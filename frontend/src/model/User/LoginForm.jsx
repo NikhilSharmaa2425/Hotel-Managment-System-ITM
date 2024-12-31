@@ -1,8 +1,8 @@
 import React from "react";
 import { Toaster, toast } from "sonner";
-import input from "../Components/input"
+import input from "../../Components/input"
 import axios from "axios"
-import { BACKEND_URL } from "../../config"
+import { BACKEND_URL } from "../../../config"
 import {useNavigate, Link} from "react-router-dom"
 
 const UserSignin = ({ setIsSignupActive }) => {
