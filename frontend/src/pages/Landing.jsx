@@ -1,22 +1,22 @@
-import React from 'react';
-import Navbar from '../Components/Navbar';
-import Hero from '../Components/Hero';
-import Destinations from '../Components/Destinations';
-import Footer from '../Components/Footer';
-import Features from '../Components/Features';
+import React from 'react'
+import Footer from '../Model/Footer'
+import Navbar from '../Components/Navbar'
+import Hero from '../Model/Hero'
+import Description from '../Model/Description'
+import Deals from '../Model/Deals'
+import Reviews from '../Model/Reviews'
 
-function Landing() {
+const Landing = () => {
   return (
-    <>
+    <div>
       <Navbar />
       <Hero />
-      <Features />
-      <Destinations />
+      <Description />
+      <Deals />
+      <Reviews />
       <Footer />
-    </>
-  );
+    </div>
+  )
 }
 
-
-
-export default Landing;
+export default Landing

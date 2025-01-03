@@ -1,5 +1,6 @@
 
 import { hotelValidator } from "../../config/helpers/validators.js"
+import bookings from "../../config/schema/booking.schema.js"
 import hotel from "../../config/schema/hotel.schema.js"
 import { fileUpload } from "../model/hotel.model.js"
 
@@ -66,13 +67,42 @@ export const updateHotel = async(req,res)=>{
 export const searchHotel = async(req,res)=>{
     const body = req.body;
     try{
-        const hotels = await hotel.find({
+        let hotels = []
+        const response = await hotel.find({
             $or: [
-                {hotelName: {$regex: new RegExp("^" + body.hotelName,"i")}},
-                {city: {$regex: new RegExp("^" + body.city,"i")}}
+                {hotelName: {$regex: new RegExp("^" + body.location,"i")}},
+                {area: {$regex: new RegExp("^" + body.location,"i")}},
+                {city: {$regex: new RegExp("^" + body.location,"i")}}
             ]
         })
-        console.log(hotels)
+        const checkFromDate = new Date(body.fromDate)
+        const checkToDate = new Date(body.toDate)
+        console.log(body.fromDate)
+        console.log(checkFromDate)
+        console.log(checkToDate)
+        if(isNaN(checkFromDate) || isNaN(checkToDate) || checkFromDate > checkToDate){
+            return res.status(400).json({error: "Invalid Date Range"})
+        }
+        for (let i = 0;i<response.length;i++){
+            const overlappingBookings = await bookings.find({
+                hotelId: response[i]._id,
+                $and: [
+                    {fromDate: {$lte: checkToDate}},
+                    {toDate: {$gte: checkFromDate}}
+                ]
+            })
+            const roomsBooked = overlappingBookings.reduce((accumulator,item)=> { return accumulator + item.rooms},0)
+            console.log(roomsBooked)
+            let RoomType = "";
+            if(body.RoomType = "AC"){
+                RoomType = "TotalAc"
+            }else{
+                RoomType = "TotalNonAc"
+            }
+            if((response[i][RoomType] - (roomsBooked + body.rooms )) >0 ){
+                hotels.push(response[i])
+            }
+        }
         res.json(hotels)
     }catch(error){
         console.log("error while search hotel",error)
@@ -80,3 +110,24 @@ export const searchHotel = async(req,res)=>{
     }
 }
 
+export const bookHotel = async(req,res)=>{
+    const body = req.body;
+    try {
+        const book = await bookings.create({
+            fromDate: new Date(body.fromDate),
+            toDate: new Date(body.toDate),
+            guests: body.guests,
+            rooms: body.rooms,
+            RoomType: body.RoomType,
+            bookedBy: req.userId,
+            hotelId: body.hotelId
+        })
+
+        res.json({
+            msg: " hotel booked" 
+        })
+    } catch (error) {
+        console.log("error while booking hotel",error)
+        res.status(403).json({msg: "error while booking hotel"})
+    }
+}

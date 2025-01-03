@@ -1,5 +1,5 @@
 import React from 'react'
-import Input from '../../Components/input'
+import Input from '../../Components/Input'
 import { BACKEND_URL } from '../../../config'
 
 const SellerSignin = ({authType}) => {

@@ -1,23 +1,29 @@
-import React from 'react';
-import '../styles/Navbar.css';
+import React from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const Navbar = () => {
+  const navigate = useNavigate()
   return (
-    <nav className="navbar">
-      <div className="navbar-container">
-        <div className="navbar-logo">
-          <span>HMS</span>
-        </div>
-        <ul className="navbar-links">
-          <li><a href="#">Shop Travel</a></li>
-          <li><a href="#">List Your Property</a></li>
-          <li><a href="#">Support</a></li>
-          <li><a href="#">Trips</a></li>
-          <li className="nav-link-btn"><button className="btn-search">Signin/Login</button></li>
-        </ul>
+    <nav className=' bg-bgColor fixed h-[8vh] z-30 w-[100%] shadow-sm'>
+      <div className='flex justify-between items-center w-full px-20 h-full'>
+      <div className='font-logo text-3xl'>
+        StaySphere
+      </div>
+      {
+        localStorage.getItem("token")?(
+          <div className='w-10 h-10 rounded-full bg-blue-500 flex justify-center items-center'>
+            {localStorage.getItem("username").split('')[0].toUpperCase()}
+          </div>
+        ):(
+          <div className=' w-28 h-12 font-primary bg-black text-white rounded-3xl flex items-center justify-center text-lg' onClick={()=>{navigate("/auth")}}>
+        Login
+      </div>
+          
+        )
+      }
       </div>
     </nav>
-  );
-};
+  )
+}
 
-export default Navbar;
+export default Navbar
