@@ -20,7 +20,7 @@ import env from "../../infrastructure/env.js"
 
 AWS.config.update({ 
     accessKeyId: env.AWS_ACCESS_ID, 
-    secretAccessKey: env.AWS_SECRET_ACCESS_KEY, 
+    secretAccessKey: env.AWS_SECRET_KEY, 
     region: 'ap-south-1' 
 });
 
