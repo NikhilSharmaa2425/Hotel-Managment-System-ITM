@@ -1,4 +1,5 @@
 
+import env from "../../../infrastructure/env.js"
 import { hotelValidator } from "../../config/helpers/validators.js"
 import bookings from "../../config/schema/booking.schema.js"
 import hotel from "../../config/schema/hotel.schema.js"
@@ -10,12 +11,14 @@ export const addHotel = async(req,res) =>{
     const file = req.file
     console.log(file)
     console.log(body)
+    console.log(Date.now())
     try {
         // const success = hotelValidator.safeParse(body)
         // if(!success.success){
         //     return res.status(401).json({msg: "data not in format"})
         // }
-        const url = await fileUpload(file)
+        const uploaded = await fileUpload(file)
+        const url = `${env.CLOUDFRONT_DOMAIN}/${uploaded.filename}`
         const response = await hotel.create({
             hotelName: body.name,
             area: body.area,
@@ -31,8 +34,10 @@ export const addHotel = async(req,res) =>{
             status: true,
             createdBy: req.userId
         })
-
-        res.json({msg: "hotel added"})
+    
+        res.json({
+            msg: "hotel added",
+        })
     } catch (error) {
         console.log(error)
         return res.status(403).json({msg: "error while adding hotel "})
